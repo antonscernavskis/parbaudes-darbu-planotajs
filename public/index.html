@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="lv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Login — Parbaudes darbi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-5">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title mb-3">Ienākt</h4>
+            <form id="loginForm">
+              <div class="mb-3">
+                <label class="form-label">Lietotājvārds</label>
+                <input name="username" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Parole</label>
+                <input name="password" type="password" class="form-control" required>
+              </div>
+              <button class="btn btn-primary w-100" type="submit">Pieslēgties</button>
+            </form>
+            <div id="err" class="text-danger mt-2"></div>
+            <hr>
+            <div class="small">Lietotāji demo: admin/adminpass, teacher/teacherpass, student/studentpass</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="/js/main.js"></script>
+</body>
+</html>

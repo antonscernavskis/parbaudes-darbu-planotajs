@@ -1,0 +1,79 @@
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    font-size: 14px;
+}
+
+h1 {
+    font-weight: 600;
+}
+
+.editor-toolbar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.editor-toolbar .btn {
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+    color: #333;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.editor-toolbar .btn:hover {
+    background-color: #e0e0e0;
+    border-color: #999;
+}
+
+.editor-toolbar .btn:active {
+    background-color: #d0d0d0;
+    border-color: #666;
+}
+
+.editor {
+    min-height: 80px;
+    background-color: #fff;
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.clickable-row:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+/* Подсветка кнопок редактирования и удаления */
+#deleteBtn:hover {
+    background-color: #dc3545cc;
+}
+
+#editBtn:hover {
+    background-color: #0d6efdcc;
+}
+
+/* Подсветка заголовка и текста */
+.modal-body p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Сделать текст в описании прокручиваемым, если длинный */
+#modalDescription {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+/* Добавим курсор для интерактивной строки таблицы */
+.clickable-row:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.toolbar button { margin-right: 4px; }
+
+#userInfo { font-weight: 600; }

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="lv">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Administrators — Pārbaudes darbi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand bg-light mb-3">
+        <div class="container-fluid">
+            <div id="navLinks" class="navbar-nav me-auto"></div>
+            <span class="navbar-brand">Administrators</span>
+            <div id="userInfo" class="ms-auto"></div>
+            <button id="changePassBtn" class="btn btn-outline-secondary btn-sm ms-2">Mainīt paroli</button>
+            <button id="logoutBtn" class="btn btn-outline-secondary btn-sm ms-2">Iziet</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h3 class="mb-3">Administrēšana</h3>
+
+        <div class="accordion" id="adminAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headUsers">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUsers">Lietotāji</button>
+                </h2>
+                <div id="collapseUsers" class="accordion-collapse collapse show" data-bs-parent="#adminAccordion">
+                    <div class="accordion-body">
+                        <div class="d-flex gap-2 mb-2">
+                            <button id="openAddUser" class="btn btn-sm btn-success">Pievienot lietotāju</button>
+                            <button id="refreshUsers" class="btn btn-sm btn-secondary">Atjaunot</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-sm" id="usersTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Username</th>
+                                        <th>Role</th>
+                                        <th>Klase</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headClasses">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClasses">Klases</button>
+                </h2>
+                <div id="collapseClasses" class="accordion-collapse collapse" data-bs-parent="#adminAccordion">
+                    <div class="accordion-body">
+                        <div class="d-flex gap-2 mb-2">
+                            <button id="openAddClass" class="btn btn-sm btn-primary">Pievienot klasi</button>
+                        </div>
+                        <ul id="classesList" class="list-group"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headSubjects">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSubjects">Priekšmeti</button>
+                </h2>
+                <div id="collapseSubjects" class="accordion-collapse collapse" data-bs-parent="#adminAccordion">
+                    <div class="accordion-body">
+                        <div class="d-flex gap-2 mb-2">
+                            <button id="openAddSubject" class="btn btn-sm btn-primary">Pievienot priekšmetu</button>
+                        </div>
+                        <ul id="subjectsList" class="list-group"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="userModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="userForm" class="needs-validation" novalidate>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userModalTitle">Pievienot lietotāju</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="user_id">
+                        <div class="mb-2">
+                            <label class="form-label">Lietotājvārds</label>
+                            <input id="u_username" class="form-control" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Parole</label>
+                            <input id="u_password" type="password" class="form-control">
+                            <div class="form-text">Atstājiet tukšu, ja nevēlaties mainīt.</div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Loma</label>
+                            <select id="u_role" class="form-select">
+                                <option value="student">student</option>
+                                <option value="teacher">teacher</option>
+                                <option value="admin">admin</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Klase (ja student)</label>
+                            <select id="u_class" class="form-select"></select>
+                        </div>
+                        <div class="mb-2 d-flex gap-2">
+                            <button id="setTempPassBtn" type="button" class="btn btn-outline-warning btn-sm">Izmantot pagaidu paroli</button>
+                            <input id="tempPassInput" class="form-control form-control-sm" placeholder="Pagaidu parole" style="max-width:200px">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="saveUserBtn" class="btn btn-primary" type="button">Saglabāt (neaizverot logu)</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Aizvērt</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="classModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="classForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Pievienot klasi</h5>
+                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label class="form-label">Klases nosaukums</label>
+                        <input id="c_name" class="form-control" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="saveClassBtn" class="btn btn-primary" type="button">Saglabāt</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Aizvērt</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="subjectModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="subjectForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Pievienot priekšmetu</h5>
+                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label class="form-label">Priekšmeta nosaukums</label>
+                        <input id="s_name" class="form-control" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="saveSubjectBtn" class="btn btn-primary" type="button">Saglabāt</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Aizvērt</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="changePassModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h5 class="modal-title">Mainīt paroli</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <label class="form-label">Pašreizējā parole</label>
+                        <input id="cp_old" type="password" class="form-control" placeholder="Ja ir pagaidu parole, ievadiet to">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Jaunā parole</label>
+                        <input id="cp_new" type="password" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Apstiprināt jauno paroli</label>
+                        <input id="cp_new2" type="password" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="changePassSave" class="btn btn-primary">Saglabāt</button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Aizvērt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+        <div id="toastContainer" class="toast-container"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+
+</html>
