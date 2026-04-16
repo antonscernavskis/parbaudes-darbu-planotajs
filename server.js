@@ -336,8 +336,8 @@ app.delete('/api/assessments/:id', requireRole(['admin','teacher']), (req, res) 
 
 
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
-app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.html')));
-app.get('/teacher', (req, res) => res.sendFile(path.join(__dirname, 'public', 'teacher.html')));
-app.get('/student', (req, res) => res.sendFile(path.join(__dirname, 'public', 'student.html')));
+app.get('/admin', requireRole(['admin']), (req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.html')));
+app.get('/teacher', requireRole(['admin', 'teacher']), (req, res) => res.sendFile(path.join(__dirname, 'public', 'teacher.html')));
+app.get('/student', requireRole(['admin', 'teacher', 'student']), (req, res) => res.sendFile(path.join(__dirname, 'public', 'student.html')));
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
